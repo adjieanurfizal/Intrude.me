@@ -6,7 +6,7 @@
 #ifndef STACK_H
 #define STACK_H
 
-typedef address Stack ;
+typedef address Stack;
 
 /* Perubahan nilai komponen struktur */
 void SetTop(Stack *S, Stack NewTop);

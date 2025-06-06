@@ -1,0 +1,39 @@
+// vote.h
+// Header untuk modul voting & skip voting
+
+#ifndef VOTE_H
+#define VOTE_H
+
+#include "boolean.h"
+#include "linkedlist.h"
+#include "stack.h"
+
+// Struktur vote
+typedef struct {
+    char voter[50];
+    char target[50];
+} Vote;
+
+typedef Vote infotype; // jika stack digunakan untuk Vote
+
+// Stack global
+extern Stack stackVoting;
+extern Stack stackReClue;
+
+// Voting Stack
+void CreateVoteStack(Stack *S);
+void PushVote(Stack *S, Vote v);
+void PopVote(Stack *S, Vote *v);
+
+// Skip Voting Stack
+void CreateSkipStack(Stack *S);
+void PushSkip(Stack *S, infotype namaPemain);
+void PopSkip(Stack *S, infotype *namaKeluar);
+
+// Proses voting eliminasi
+void ProsesEliminasi(Stack S, List L);
+
+// Prosedur fase voting
+void faseVoting(List L);
+
+#endif
