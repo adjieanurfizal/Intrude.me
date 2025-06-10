@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "linked.h"
+#include "../header/linkedlist.h"
 
 address Alokasi(infotype X) {
     address P = (address)malloc(sizeof(Node));
@@ -10,6 +10,6 @@ address Alokasi(infotype X) {
     return P;
 }
 
-void Dealokasi(address P) {
+void Dealokasi(address P) {\
     free(P);
 }

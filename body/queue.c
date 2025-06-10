@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include "queue_.h"
+#include "../header/queue.h"
 
 void CreateQueue(Queue *Q) {
     Q->Front = NULL;
