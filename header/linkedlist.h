@@ -7,7 +7,7 @@
 
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-#include "boolean.h"
+#include "../BOOLEAN.H"
 #include <stdio.h>
 #define Nil NULL
 #define Info(P) (P)->info
