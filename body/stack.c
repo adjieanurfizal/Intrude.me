@@ -3,9 +3,6 @@
 /* Dibuat oleh : Ade Chandra Nugraha                                    */
 
 #include "../header/stack.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 
 /**** Perubahan nilai komponen struktur ****/
 void SetTop (Stack *S, Stack NewTop ){

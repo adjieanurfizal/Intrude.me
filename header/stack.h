@@ -6,6 +6,11 @@
 #ifndef STACK_H
 #define STACK_H
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include "../header/vote.h"
+
 typedef address Stack;
 
 /* Perubahan nilai komponen struktur */
@@ -20,9 +25,9 @@ void CreateEmpty (Stack *S);
 bool IsEmpty (Stack S);
 
 /* Menambahkan sebuah elemen ke Stack */
-void Push (Stack *S, infotype X);
+void Push (Stack *S, infotype v);
 
 /* Menghapus sebuah elemen Stack */
-void Pop (Stack *S, infotype *X);
+void Pop (Stack *S, infotype *v);
 
 #endif

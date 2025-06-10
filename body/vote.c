@@ -1,10 +1,6 @@
 // vote.c
 // Sistem Voting & Skip Voting untuk INTRUDE.ME dengan integrasi ke Stack
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 #include "../header/vote.h"
 #include "../header/stack.h"
 #include "../header/linkedlist.h"

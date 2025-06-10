@@ -4,6 +4,12 @@
 #ifndef VOTE_H
 #define VOTE_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <stdbool.h>
+
 #include "boolean.h"
 #include "linkedlist.h"
 #include "stack.h"
