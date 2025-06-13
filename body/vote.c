@@ -15,12 +15,12 @@ void CreateSkipStack(Stack *S) {
 }
 
 // Tambahkan pemain ke stack skip voting
-void PushSkip(Stack *S, infotype namaPemain) {
+void PushSkip(Stack *S, Vote namaPemain) {
     Push(S, namaPemain);
 }
 
 // Ambil pemain terakhir yang skip voting
-void PopSkip(Stack *S, infotype *namaKeluar) {
+void PopSkip(Stack *S, Vote *namaKeluar) {
     Pop(S, namaKeluar);
 }
 

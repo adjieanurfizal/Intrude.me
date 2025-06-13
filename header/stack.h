@@ -25,9 +25,9 @@ void CreateEmpty (Stack *S);
 bool IsEmpty (Stack S);
 
 /* Menambahkan sebuah elemen ke Stack */
-void Push (Stack *S, infotype v);
+void Push (Stack *S, Vote v);
 
 /* Menghapus sebuah elemen Stack */
-void Pop (Stack *S, infotype *v);
+void Pop (Stack *S, Vote *v);
 
 #endif

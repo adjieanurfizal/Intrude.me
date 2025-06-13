@@ -10,7 +10,7 @@
 #include <time.h>
 #include <stdbool.h>
 
-#include "boolean.h"
+#include "../BOOLEAN.H"
 #include "linkedlist.h"
 #include "stack.h"
 
@@ -19,8 +19,6 @@ typedef struct {
     char voter[50];
     char target[50];
 } Vote;
-
-typedef Vote infotype; // jika stack digunakan untuk Vote
 
 // Stack global
 extern Stack stackVoting;
@@ -33,8 +31,8 @@ void PopVote(Stack *S, Vote *v);
 
 // Skip Voting Stack
 void CreateSkipStack(Stack *S);
-void PushSkip(Stack *S, infotype namaPemain);
-void PopSkip(Stack *S, infotype *namaKeluar);
+void PushSkip(Stack *S, Vote namaPemain);
+void PopSkip(Stack *S, Vote *namaKeluar);
 
 // Proses voting eliminasi
 void ProsesEliminasi(Stack S, List L);

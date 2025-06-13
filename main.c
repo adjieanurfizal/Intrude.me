@@ -1,33 +1,35 @@
 #include <stdio.h>
-#include "header/queue.h"
+#include <stdlib.h>
+#include <string.h>
+#include "header/player.h"
+#include "header/vote.h"
+#include "header/clue.h"
+
+List pemain;
 
 int main() {
-    Queue Q;
-    int X;
+    pemain = InisialisasiPemain();
 
-    CreateQueue(&Q);
-    EnQueue(&Q, 10);
-    EnQueue(&Q, 20);
-    EnQueue(&Q, 30);
+    char lanjut[10];
+    do {
+        faseClue(pemain);        // clue awal
+        faseVoting(pemain);      // voting
+        faseReClue(&stackReClue); // clue ulang dari skip
 
-    printf("Isi queue setelah enqueue 10, 20, 30:\n");
-    Queue temp = Q;
-    while (!is_Empty(temp)) {
-        deQueue(&temp, &X);
-        printf("%d ", X);
+        printf("\nIngin lanjut ke ronde berikutnya? (ya/tidak): ");
+        scanf("%s", lanjut);
+        getchar();
+
+    } while (strcmp(lanjut, "ya") == 0);
+
+    // DEALOKASI LINKED LIST
+    address p = First(pemain);
+    while (p != NULL) {
+        address temp = p;
+        p = Next(p);
+        free(temp);
     }
-    printf("\n");
 
-    // Enqueue lagi setelah kosong
-    EnQueue(&Q, 40);
-    EnQueue(&Q, 50);
-
-    printf("Isi queue setelah enqueue 40, 50:\n");
-    while (!is_Empty(Q)) {
-        deQueue(&Q, &X);
-        printf("%d ", X);
-    }
-    printf("\n");
-
+    printf("\nTerima kasih telah bermain INTRUDE.ME!\n");
     return 0;
 }
