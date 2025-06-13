@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/adjie/OneDrive - Politeknik Negeri Bandung/Documents/Kuliah POLBAN/Semester 2/Struktur Data Algoritma [Praktek]/Intrude.me",
-      "program": "c:/Users/adjie/OneDrive - Politeknik Negeri Bandung/Documents/Kuliah POLBAN/Semester 2/Struktur Data Algoritma [Praktek]/Intrude.me/build/Debug/outDebug",
+      "cwd": "c:/Users/adjie/OneDrive - Politeknik Negeri Bandung/Documents/Kuliah POLBAN/Semester 2/Struktur Data Algoritma [Praktek]/Tugas Besar/Intrude.me",
+      "program": "c:/Users/adjie/OneDrive - Politeknik Negeri Bandung/Documents/Kuliah POLBAN/Semester 2/Struktur Data Algoritma [Praktek]/Tugas Besar/Intrude.me/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
