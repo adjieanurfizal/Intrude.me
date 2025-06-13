@@ -1,38 +1,57 @@
-#include "../header/queue.h"
+// queue.c
+#include <stdio.h>
+#include <stdlib.h>
+#include "queue.h"
 
+/**** Konstruktor/Kreator ****/
 void CreateQueue(Queue *Q) {
-    Q->Front = NULL;
-    Q->Rear = NULL;
+    Q->Head = NULL;
+    Q->Tail = NULL;
 }
 
-boolean is_Empty(Queue Q) {
-    return (Q.Front == NULL);
+/**** Predikat untuk test keadaan Queue ****/
+boolean IsEmpty(Queue Q) {
+    return (Q.Head == NULL);
 }
 
-boolean is_Full(Queue Q) {
-    return false; // Karena menggunakan linked list, queue tidak bisa penuh
-}
-
-void EnQueue(Queue *Q, infotype X) {
+/**** Menambahkan elemen ke Queue (Enqueue) ****/
+void Enqueue(Queue *Q, infotype X) {
     address P = Alokasi(X);
     if (P != NULL) {
-        if (is_Empty(*Q)) {
-            Q->Front = Q->Rear = P;
+        if (IsEmpty(*Q)) {
+            Q->Head = P;
+            Q->Tail = P;
         } else {
-            Q->Rear->next = P;
-            Q->Rear = P;
+            Next(Q->Tail) = P;
+            Q->Tail = P;
         }
     }
 }
 
-void deQueue(Queue *Q, infotype *X) {
-    if (!is_Empty(*Q)) {
-        address P = Q->Front;
-        *X = P->info;
-        Q->Front = Q->Front->next;
-        if (Q->Front == NULL) {
-            Q->Rear = NULL;
+/**** Menghapus elemen dari Queue (Dequeue) ****/
+void Dequeue(Queue *Q, infotype *X) {
+    if (!IsEmpty(*Q)) {
+        address P = Q->Head;
+        *X = Info(P);
+        Q->Head = Next(P);
+        if (Q->Head == NULL) {
+            Q->Tail = NULL;
         }
-        Dealokasi(P);
+        DeAlokasi(P);
+    }
+}
+
+/**** Mencetak elemen dalam Queue ****/
+void PrintQueue(Queue Q) {
+    address P = Q.Head;
+    printf("Isi Queue: ");
+    if (IsEmpty(Q)) {
+        printf("Kosong\n");
+    } else {
+        while (P != NULL) {
+            printf("%d ", Info(P));
+            P = Next(P);
+        }
+        printf("\n");
     }
 }
