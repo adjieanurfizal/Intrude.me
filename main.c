@@ -2,61 +2,103 @@
 #include <stdlib.h>
 #include <string.h>
 #include "player.h"
-#include "../header/queue.h"
+#include "vote.h"
+#include "clue.h"
+
+void tampilkanMenuUtama();
+void tampilkanPetunjuk();
+void tampilkanLeaderboard();
+void tampilkanPengaturan();
+void jalankanPermainan();
 
 int main() {
-    int jumlahPemain, i, pilihan;
-    char nama[MAX_NAME];
-    PlayerList playerList;
-    InitPlayerList(&playerList);
-
-    printf("Masukkan jumlah pemain: ");
-    scanf("%d", &jumlahPemain);
-    getchar(); // buang newline
-
-    for (i = 0; i < jumlahPemain; i++) {
-        printf("\n--- Pemain #%d ---\n", i + 1);
-
-        printf("Nama: ");
-        fgets(nama, MAX_NAME, stdin);
-        nama[strcspn(nama, "\n")] = 0; // Hapus newline dari fgets
-
-        printf("Pilih peran:\n");
-        printf("0. DEVELOPER\n1. MALWARE\n2. CIVILIAN\n3. BOT\n");
-        printf("Pilihan: ");
+    int pilihan;
+    do {
+        tampilkanMenuUtama();
+        printf("\nPilih menu (1-5): ");
         scanf("%d", &pilihan);
-        getchar(); // buang newline
+        getchar();
 
-        AddPlayer(&playerList, CreatePlayer(nama, (Role)pilihan));
-    }
-
-    // Input kata rahasia
-    char devWord[MAX_WORD], malWord[MAX_WORD];
-    printf("\nMasukkan kata untuk Developer: ");
-    fgets(devWord, MAX_WORD, stdin);
-    devWord[strcspn(devWord, "\n")] = 0;
-
-    printf("Masukkan kata untuk Malware: ");
-    fgets(malWord, MAX_WORD, stdin);
-    malWord[strcspn(malWord, "\n")] = 0;
-
-    DistributeWords(&playerList, devWord, malWord);
-
-    // Tampilkan daftar pemain
-    printf("\n=== Daftar Pemain ===\n");
-    PrintPlayers(&playerList);
-
-    // Masukkan ke queue
-    Queue giliran;
-    CreateQueue(&giliran);
-    AddPlayersToQueue(&playerList, &giliran);
-
-    printf("\n=== Giliran Bermain ===\n");
-    Player* p = playerList.head;
-    while (p != NULL) {
-        printf("%s\n", p->name);
-        p = p->next;
-    }
+        switch (pilihan) {
+            case 1:
+                jalankanPermainan();
+                break;
+            case 2:
+                tampilkanPetunjuk();
+                break;
+            case 3:
+                tampilkanLeaderboard();
+                break;
+            case 4:
+                tampilkanPengaturan();
+                break;
+            case 5:
+                printf("\n👋 Terima kasih telah bermain INTRUDE.ME!\n");
+                break;
+            default:
+                printf("\nPilihan tidak valid.\n");
+        }
+    } while (pilihan != 5);
 
     return 0;
+}
+
+void tampilkanMenuUtama() {
+    printf("\n======================================\n");
+    printf("🎮 SELAMAT DATANG DI INTRUDE.ME\n");
+    printf("======================================\n");
+    printf("1. Mulai Permainan\n");
+    printf("2. Petunjuk Permainan\n");
+    printf("3. Lihat Leaderboard\n");
+    printf("4. Pengaturan\n");
+    printf("5. Keluar\n");
+}
+
+void tampilkanPetunjuk() {
+    printf("\n📘 PETUNJUK PERMAINAN:\n");
+    printf("1. Setiap pemain mendapat peran dan kata rahasia.\n");
+    printf("2. Pemain memberikan clue satu per satu.\n");
+    printf("3. Pemain dapat memilih untuk vote atau skip.\n");
+    printf("4. Pemain dengan suara terbanyak akan dieliminasi.\n");
+    printf("5. Permainan berlanjut hingga menang/kalah tercapai.\n");
+}
+
+void tampilkanLeaderboard() {
+    printf("\n🏆 LEADERBOARD (sementara)\n");
+    printf("(fitur akan diimplementasikan)\n");
+}
+
+void tampilkanPengaturan() {
+    printf("\n⚙ PENGATURAN\n");
+    printf("(fitur akan diimplementasikan)\n");
+}
+
+void jalankanPermainan() {
+    List pemain = InisialisasiPemain();
+    char lanjut[10];
+
+    do {
+        fasePemain(PlayerList* list, int* jumlahPemain)
+
+        printf("\n🎙 FASE CLUE DIMULAI\n");
+        faseClue(pemain);
+
+        printf("\n🗳 FASE VOTING DIMULAI\n");
+        faseVoting(pemain);
+
+        printf("\nIngin lanjut ke ronde berikutnya? (ya/tidak): ");
+        scanf("%s", lanjut);
+        getchar();
+
+    } while (strcmp(lanjut, "ya") == 0);
+
+    // DEALOKASI LIST
+    address p = First(pemain);
+    while (p != NULL) {
+        address temp = p;
+        p = Next(p);
+        free(temp);
+    }
+
+    printf("\n🏁 Permainan selesai. Skor akhir dan leaderboard akan ditampilkan.\n");
 }
