@@ -66,3 +66,37 @@ void AddPlayersToQueue(PlayerList* list, Queue* q) {
         current = current->next;
     }
 }
+
+void assignRole(PlayerList* list) {
+    int index = 0;
+    Player* current = list->head;
+    while (current) {
+        if (index == 0) current->role = MALWARE;
+        else if (index == 1) current->role = WHITEHAT;
+        else current->role = DEVELOPER;
+        index++;
+        current = current->next;
+    }
+}
+
+void fasePemain(PlayerList* list, int* jumlahPemain) {
+    InitPlayerList(list);
+    printf("\n👥 Masukkan jumlah pemain: ");
+    scanf("%d", jumlahPemain);
+    getchar();
+
+    for (int i = 0; i < *jumlahPemain; i++) {
+        char nama[MAX_NAME];
+        printf("Nama pemain ke-%d: ", i + 1);
+        fgets(nama, MAX_NAME, stdin);
+        nama[strcspn(nama, "\n")] = 0; // hapus newline
+
+        Player* p = CreatePlayer(nama, DEVELOPER); // default sementara
+        AddPlayer(list, p);
+    }
+
+    assignRole(list);
+
+    printf("\n✅ Pemain berhasil dibuat:\n");
+    PrintPlayers(list);
+}

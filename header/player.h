@@ -39,4 +39,7 @@ void DistributeWords(PlayerList* list, const char* developerWord, const char* ma
 // Integrasi dengan Queue (jika infotype diubah jadi pointer)
 void AddPlayersToQueue(PlayerList* list, struct Queue* q);
 
+void assignRole(PlayerList* list);
+void fasePemain(PlayerList* list, int* jumlahPemain);
+
 #endif

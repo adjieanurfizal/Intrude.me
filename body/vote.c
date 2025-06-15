@@ -1,9 +1,4 @@
-// vote.c
-// Sistem Voting & Skip Voting untuk INTRUDE.ME dengan integrasi ke Stack
-
 #include "../header/vote.h"
-#include "../header/stack.h"
-#include "../header/linkedlist.h"
 
 // Stack voting & skip
 Stack stackVoting;
@@ -93,6 +88,10 @@ void ProsesEliminasi(Stack S, List L) {
 
 // Prosedur utama fase voting
 void faseVoting(List L) {
+    printf("\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+    printf("🗳️  FASE VOTING DIMULAI     \n");
+    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
     CreateVoteStack(&stackVoting);
     CreateSkipStack(&stackReClue);
 
@@ -118,6 +117,7 @@ void faseVoting(List L) {
                 strcpy(v.target, target);
 
                 PushVote(&stackVoting, v);
+                catatVote(v.voter, v.target, ronde);
             }
         }
         p = Next(p);

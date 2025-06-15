@@ -8,11 +8,13 @@
 #include <string.h>
 #include "queue.h"
 #include "linkedlist.h"
-#include "stack.h" // Untuk Stack ReClue
+#include "stack.h"
 
 Queue queueClue;
+extern Stack stackReClue; // Dari skip voting
+extern Stack stackVoting; // Dari vote aktif
 
 void faseClue(List L);
-void faseReClue(Stack *S);
+void tampilkanClue(char* nama, char* clue);
 
 #endif

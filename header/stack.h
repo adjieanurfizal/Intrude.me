@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../header/vote.h"
+#include "vote.h"
 
 typedef address Stack;
 
@@ -22,7 +22,7 @@ void SetTop(Stack *S, Stack NewTop);
 void CreateEmpty (Stack *S);
 
 /* Predikat untuk test keadaan KOLEKSI */
-bool IsEmpty (Stack S);
+bool IsStackEmpty (Stack S);
 
 /* Menambahkan sebuah elemen ke Stack */
 void Push (Stack *S, Vote v);

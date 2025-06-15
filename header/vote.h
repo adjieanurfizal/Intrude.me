@@ -13,6 +13,7 @@
 #include "../BOOLEAN.H"
 #include "linkedlist.h"
 #include "stack.h"
+#include "log.h"
 
 // Struktur vote
 typedef struct {
