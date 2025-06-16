@@ -9,15 +9,13 @@ void tampilkanMenuUtama();
 void tampilkanPetunjuk();
 void tampilkanLeaderboard();
 void tampilkanPengaturan();
-void jalankanPermainan(PlayerList* playerList);
+void jalankanPermainan(List* playerList);
 
-int main() {
+int main(){
     int pilihan;
-    PlayerList playerList;
+    List playerList;
     InitPlayerList(&playerList);
 
-    char pemain[30];
-    int lanjut;
     do {
         tampilkanMenuUtama();
         printf("\nPilih menu (1-5): ");
@@ -78,18 +76,18 @@ void tampilkanPengaturan() {
     printf("(fitur akan diimplementasikan)\n");
 }
 
-void jalankanPermainan(PlayerList* playerList) {
+void jalankanPermainan(List* playerList) {
     char pemain[30];
-    char lanjut[10]; // string, bukan int
+    char lanjut[10];
 
     fasePemain(playerList, pemain, lanjut);
 
     do {
         printf("\n🎙 FASE CLUE DIMULAI\n");
-        faseClue(playerList);
+        faseClue(*playerList);
 
         printf("\n🗳 FASE VOTING DIMULAI\n");
-        faseVoting(playerList); // karena menerima List
+        faseVoting(*playerList);
 
         printf("\nIngin lanjut ke ronde berikutnya? (ya/tidak): ");
         scanf("%s", lanjut);

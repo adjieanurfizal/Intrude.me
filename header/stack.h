@@ -11,13 +11,6 @@
 #include <stdbool.h>
 #include "vote.h"
 
-typedef int infotype;
-
-typedef struct tElmtStack *addressStack;
-typedef struct tElmtStack {
-    infotype info;
-    address next;
-} tElmtStack;
 typedef address Stack;
 
 /* Perubahan nilai komponen struktur */
@@ -26,15 +19,17 @@ void SetTop(Stack *S, Stack NewTop);
 /*    PROTO TYPE    */
 
 /* Konstruktor/Kreator */
-void CreateEmpty (Stack *S);
+void CreateEmpty (Stack* S);
 
 /* Predikat untuk test keadaan KOLEKSI */
 bool IsStackEmpty (Stack S);
 
 /* Menambahkan sebuah elemen ke Stack */
-void Push (Stack *S, infotype v);
+void Push (Stack* S, infotype v);
 
 /* Menghapus sebuah elemen Stack */
-void Pop (Stack *S, infotype *v);
+void Pop (Stack* S, infotype* v);
+
+void PrintStack(Stack S, void (*printFunc)(infotype));
 
 #endif

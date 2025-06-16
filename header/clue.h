@@ -6,16 +6,15 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "stack.h"
 #include "queue.h"
 #include "linkedlist.h"
-#include "stack.h"
+
 
 Queue queueClue;
-extern StackString stackReClue; // Dari skip voting
-extern StackVote stackVoting; // Dari vote aktif
 
-void faseClue(PlayerList* L);  // jika pakai pointer
+void faseClue(List L);  // jika pakai pointer
 
-void tampilkanClue(char* nama, char* clue);
+void tampilkanClue(List* list, const char* nama, const char* clue);
 
 #endif

@@ -1,63 +1,24 @@
-#include "../header/vote.h"
-#include <string.h>
-#include <stdio.h>
+#include "header/vote.h"
 
-StackVote stackVoting;
-StackString stackReClue;
+Stack stackVoting;
+Stack stackReClue;
 
-// --- Fungsi Stack Voting (Vote Struct) ---
-void CreateVoteStack(StackVote *S) {
-    *S = NULL;
-}
-
-bool IsVoteStackEmpty(StackVote S) {
-    return S == NULL;
-}
-
-void PushVote(StackVote *S, Vote v) {
-    addressVote P = (addressVote)malloc(sizeof(ElmtVoteStack));
-    if (P != NULL) {
-        P->info = v;
-        P->next = *S;
-        *S = P;
+Vote* CreateVote(const char* voter, const char* target) {
+    Vote* v = (Vote*)malloc(sizeof(Vote));
+    if (v) {
+        strncpy(v->voter, voter, 50);
+        strncpy(v->target, target, 50);
     }
+    return v;
 }
 
-void PopVote(StackVote *S, Vote *v) {
-    if (!IsVoteStackEmpty(*S)) {
-        addressVote P = *S;
-        *v = P->info;
-        *S = P->next;
-        free(P);
-    }
+void PrintVote(infotype data) {
+    Vote* v = (Vote*)data;
+    printf("Voter: %s -> Target: %s\n", v->voter, v->target);
 }
 
-// --- Fungsi Stack Skip Voting (String) ---
-void CreateSkipStack(StackString *S) {
-    *S = NULL;
-}
-
-void PushSkip(StackString *S, char nama[]) {
-    addressStr P = (addressStr)malloc(sizeof(ElmtStrStack));
-    if (P != NULL) {
-        strcpy(P->info, nama);
-        P->next = *S;
-        *S = P;
-    }
-}
-
-void PopSkip(StackString *S, char nama[]) {
-    if (*S != NULL) {
-        addressStr P = *S;
-        strcpy(nama, P->info);
-        *S = P->next;
-        free(P);
-    }
-}
-
-// --- Proses Eliminasi ---
-void ProsesEliminasi(StackVote S, List L) {
-    if (IsVoteStackEmpty(S)) return;
+void ProsesEliminasi(Stack S, List L) {
+    if (IsStackEmpty(S)) return;
 
     typedef struct {
         char target[50];
@@ -67,13 +28,14 @@ void ProsesEliminasi(StackVote S, List L) {
     VoteCount hasil[50];
     int nHasil = 0;
 
-    while (!IsVoteStackEmpty(S)) {
-        Vote v;
-        PopVote(&S, &v);
+    while (!IsStackEmpty(S)) {
+        infotype temp;
+        Pop(&S, &temp);
+        Vote* v = (Vote*)temp;
 
         int found = 0;
         for (int i = 0; i < nHasil; i++) {
-            if (strcmp(hasil[i].target, v.target) == 0) {
+            if (strcmp(hasil[i].target, v->target) == 0) {
                 hasil[i].count++;
                 found = 1;
                 break;
@@ -81,13 +43,14 @@ void ProsesEliminasi(StackVote S, List L) {
         }
 
         if (!found) {
-            strcpy(hasil[nHasil].target, v.target);
+            strcpy(hasil[nHasil].target, v->target);
             hasil[nHasil].count = 1;
             nHasil++;
         }
+
+        free(v);
     }
 
-    // Temukan vote tertinggi
     int max = -1, idxMax = -1;
     for (int i = 0; i < nHasil; i++) {
         if (hasil[i].count > max) {
@@ -99,8 +62,10 @@ void ProsesEliminasi(StackVote S, List L) {
     if (idxMax != -1) {
         address p = First(L);
         while (p != NULL) {
-            if (strcmp(Info(p).nama, hasil[idxMax].target) == 0) {
-                Info(p).aktif = 0;  // dieliminasi
+            Player* pl = (Player*)Info(p);
+            if (strcmp(pl->name, hasil[idxMax].target) == 0) {
+                pl->eliminated = true;
+                printf("❌ %s telah dieliminasi!\n", pl->name);
                 break;
             }
             p = Next(p);
@@ -108,33 +73,30 @@ void ProsesEliminasi(StackVote S, List L) {
     }
 }
 
-// --- Fase Voting ---
-void faseVoting(playerList* L) {
-    CreateVoteStack(&stackVoting);
-    CreateSkipStack(&stackReClue);
+void faseVoting(List L) {
+    CreateStack(&stackVoting);
+    CreateStack(&stackReClue);
 
     address p = First(L);
     while (p != NULL) {
-        if (Info(p).aktif == 1) {
+        Player* pl = (Player*)Info(p);
+        if (!pl->eliminated) {
             char pilihan[10];
-            printf("\n🗳  %s, ingin vote atau skip? (vote/skip): ", Info(p).nama);
+            printf("\n🗳  %s, ingin vote atau skip? (vote/skip): ", pl->name);
             scanf("%s", pilihan);
             getchar();
 
             if (strcmp(pilihan, "skip") == 0) {
-                PushSkip(&stackReClue, Info(p).nama);
-                printf("🔕 %s skip voting dan akan memberikan clue ulang.\n", Info(p).nama);
+                Push(&stackReClue, pl);
+                printf("🔕 %s skip voting dan akan memberikan clue ulang.\n", pl->name);
             } else {
-                Vote v;
-                strcpy(v.voter, Info(p).nama);
-
                 char target[50];
-                printf("👁  %s memilih siapa? Masukkan nama target: ", Info(p).nama);
+                printf("👁  %s memilih siapa? Masukkan nama target: ", pl->name);
                 fgets(target, 50, stdin);
                 target[strcspn(target, "\n")] = 0;
-                strcpy(v.target, target);
 
-                PushVote(&stackVoting, v);
+                Vote* v = CreateVote(pl->name, target);
+                Push(&stackVoting, v);
             }
         }
         p = Next(p);

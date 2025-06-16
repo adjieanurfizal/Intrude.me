@@ -1,36 +1,31 @@
-/* File        : linkedlist.c                                                                               */
-/* Deskripsi   : Body prototype ADT Non Restricted Single Linked/Linear list yang hanya dikenali First(L)   */
-/* Dibuat oleh : Ade Chandra Nugraha                                                                        */
-/* Tanggal     : 24-10-2001                                                                                 */
-
 #include <limits.h>
 #include <malloc.h>
-#include "../header/linkedlist.h"
+#include "header/linkedlist.h"
 
 /**** Predikat untuk test keadaan LIST  ****/
 boolean ListEmpty (List L){
-	return (First(L) == Nil);
+	return (L.head == NULL);
 }
 
 /**** Konstruktor/Kreator List Kosong ****/
-void CreateList (List * L){
-	First(*L) = Nil;
+void CreateList (List* L){
+	L->head = NULL;
 }
 
 /**** Manajemen Memory ****/
 address Alokasi (infotype X){
 	address P;
 	
-	P = (address) malloc (sizeof (ElmtList));
-	if (P != Nil){
+	P = (address)malloc(sizeof(ElmtList));
+	if (P != NULL){
         Info(P) = X;
-        Next(P) = Nil;
+        Next(P) = NULL;
 	}
 	return (P);
 }
 
 void DeAlokasi (address P){
-	if (P != Nil){
+	if (P != NULL){
 	    free (P);
 	}
 }
@@ -42,7 +37,7 @@ address Search (List L, infotype X){
 	boolean found =  false;
 	
 	P = First(L);
-	while ((P != Nil) && (!found)){
+	while ((P != NULL) && (!found)){
 		if (Info(P) == X){	
             found = true; 	
         }
@@ -59,7 +54,7 @@ boolean FSearch (List L, address P){
     address PSearch;
 	
 	PSearch = First(L);
-	while ((PSearch != Nil) && (!found)){
+	while ((PSearch != NULL) && (!found)){
 		if (PSearch == P){	
             found = true; 	
         }
@@ -75,9 +70,9 @@ address SearchPrec (List L, infotype X){
 	address Prec, P;
 	boolean found=false;
 	
-	Prec = Nil;
+	Prec = NULL;
 	P = First(L);
-	while ((P != Nil) && (!found)){
+	while ((P != NULL) && (!found)){
 		if (Info(P) == X){	
             found = true;	
         }
@@ -90,7 +85,7 @@ address SearchPrec (List L, infotype X){
         return (Prec);		
     }
 	else{	
-        return (Nil);		
+        return (NULL);		
     }
 }
 
@@ -132,11 +127,11 @@ void DelVFirst (List * L, infotype * X){
 	
 	address P;
 	
-	if (First(*L) != Nil){
+	if (First(*L) != NULL){
 		P = First(*L);
 		First(*L) = Next(P);
 		*X = Info(P);
-		Next(P) = Nil;
+		Next(P) = NULL;
 		DeAlokasi (P);
 	}
 }
@@ -145,20 +140,20 @@ void DelVLast (List * L, infotype * X){
 
 	address PDel, prec;
 	
-	if (First(*L) != Nil)
+	if (First(*L) != NULL)
 	{
 		PDel = First(*L);
-		if (Next(PDel) == Nil){
+		if (Next(PDel) == NULL){
 			*X = Info(PDel);
-			First(*L) = Nil;
+			First(*L) = NULL;
 			DeAlokasi(PDel);
 		} else {
-			prec = Nil;
-			while (Next(PDel) != Nil){
+			prec = NULL;
+			while (Next(PDel) != NULL){
 				prec = PDel;
 				PDel = Next(PDel);
 			}
-			Next(prec) = Nil;
+			Next(prec) = NULL;
 			*X = Info(PDel);
 		}
 		DeAlokasi(PDel);
@@ -168,9 +163,9 @@ void DelVLast (List * L, infotype * X){
 /**** PRIMITIF BERDASARKAN ALAMAT ****/
 /**** Penambahan elemen berdasarkan alamat ****/
 void InsertFirst (List * L, address P){
-	if (P != Nil){
-		Next(P) = First(*L);
-		First(*L) = P;
+	if (P != NULL){
+		Next(P) = L->head;
+     	L->head = P;
 	}
 }
 
@@ -182,24 +177,26 @@ void InsertAfter (List * L, address P, address Prec){
     }
 }
 
-void InsertLast (List * L, address P){
-	
-	address Last;
-
-	Last = First(*L);
-	while (Next(Last) != Nil){
-		Last = Next(Last);
-	}
-	Next(Last) = P;
-	Next(P) = Nil;
+void InsertLast(List* L, address P) {
+    if (ListEmpty(*L)) {
+        InsertFirst(L, P);
+    } else {
+        address last = L->head;
+        while (Next(last) != NULL) {
+            last = Next(last);
+        }
+        Next(last) = P;
+    }
 }
 
 /**** Penghapusan sebuah elemen ****/
-void DelFirst (List * L, address * P){
-	First(*L) = Next(*P);
-	Next(*P) = Nil;
+void DelFirst(List* L, address* P) {
+    if (!ListEmpty(*L)) {
+        *P = L->head;
+        L->head = Next(L->head);
+        Next(*P) = NULL;
+    }
 }
-
 
 void DelP (List * L, infotype X){
 
@@ -207,17 +204,21 @@ void DelP (List * L, infotype X){
 	boolean found=false;
 }
 
-void DelLast (List * L, address * P){
-	
-	address Prec;
-	
-	*P = First(*L);
-		while (Next(*P) != Nil){
-			Prec = (*P);
-			(*P) = Next(*P);
-		}
-	Next(Prec) = Nil;
-	(*P) = Prec;
+void DelLast(List* L, address* P) {
+    if (!ListEmpty(*L)) {
+        address prev = NULL;
+        address curr = L->head;
+        while (Next(curr) != NULL) {
+            prev = curr;
+            curr = Next(curr);
+        }
+        *P = curr;
+        if (prev == NULL) {
+            L->head = NULL;
+        } else {
+            Next(prev) = NULL;
+        }
+    }
 }
 
 void DelAfter (List * L, address * Pdel, address Prec){
@@ -230,23 +231,13 @@ void DelAfter (List * L, address * Pdel, address Prec){
 
 
 /**** PROSES SEMUA ELEMEN LIST  ****/
-void PrintInfo (List L){
-
-	address P;
-	
-	P = First(L);
-	if (ListEmpty(L)){
-		printf(" ");
-	} 
-	else{
-		while ((P) != Nil){
-			printf("%d ", Info(P));
-			P = Next(P);
-		}
-		printf("\n");
-	}
+void PrintList(List L, void (*printFunc)(infotype)) {
+    address P = L.head;
+    while (P != NULL) {
+        printFunc(Info(P));
+        P = Next(P);
+    }
 }
-
 
 void DelAll (List * L){
 
