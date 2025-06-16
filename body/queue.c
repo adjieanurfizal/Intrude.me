@@ -1,7 +1,7 @@
 // queue.c
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
+#include "header/queue.h"
 
 /**** Konstruktor/Kreator ****/
 void CreateQueue(Queue *Q) {
@@ -42,16 +42,10 @@ void Dequeue(Queue *Q, infotype *X) {
 }
 
 /**** Mencetak elemen dalam Queue ****/
-void PrintQueue(Queue Q) {
-    address P = Q.Head;
-    printf("Isi Queue: ");
-    if (IsEmpty(Q)) {
-        printf("Kosong\n");
-    } else {
-        while (P != NULL) {
-            printf("%d ", Info(P));
-            P = Next(P);
-        }
-        printf("\n");
+void PrintQueue(Queue Q, void (*printFunc)(infotype)) {
+    address P = Q.head;
+    while (P != NULL) {
+        printFunc(Info(P));
+        P = Next(P);
     }
 }

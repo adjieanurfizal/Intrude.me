@@ -6,7 +6,7 @@
 #define QUEUE_H
 
 #include "linkedlist.h"
-#include "boolean.h"
+#include "BOOLEAN.H"
 
 /* Definisi Queue sebagai Linked List dengan Head dan Tail */
 typedef struct {
@@ -36,7 +36,7 @@ void Dequeue(Queue *Q, infotype *X);
 /* FS : X adalah nilai elemen Head yang lama, Head bergeser */
 
 /**** Mencetak elemen dalam Queue ****/
-void PrintQueue(Queue Q);
+void PrintQueue(Queue Q, void (*printfunc)(infotype));
 /* Menampilkan seluruh elemen dalam Queue */
 
 #endif
