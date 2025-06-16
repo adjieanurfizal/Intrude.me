@@ -7,12 +7,12 @@
 
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-#include "../BOOLEAN.H"
+#include "BOOLEAN.H"
 #include <stdio.h>
 #define Nil NULL
 #define Info(P) (P)->info
 #define Next(P) (P)->next
-#define First(L) (L).First
+#define First(L) (L).head
 
 typedef int infotype;
 typedef struct tElmtList *address;

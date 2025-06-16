@@ -9,8 +9,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../header/vote.h"
+#include "vote.h"
 
+typedef int infotype;
+
+typedef struct tElmtStack *addressStack;
+typedef struct tElmtStack {
+    infotype info;
+    address next;
+} tElmtStack;
 typedef address Stack;
 
 /* Perubahan nilai komponen struktur */
@@ -22,12 +29,12 @@ void SetTop(Stack *S, Stack NewTop);
 void CreateEmpty (Stack *S);
 
 /* Predikat untuk test keadaan KOLEKSI */
-bool IsEmpty (Stack S);
+bool IsStackEmpty (Stack S);
 
 /* Menambahkan sebuah elemen ke Stack */
-void Push (Stack *S, Vote v);
+void Push (Stack *S, infotype v);
 
 /* Menghapus sebuah elemen Stack */
-void Pop (Stack *S, Vote *v);
+void Pop (Stack *S, infotype *v);
 
 #endif

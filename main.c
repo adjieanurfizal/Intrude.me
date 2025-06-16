@@ -1,18 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "player.h"
-#include "vote.h"
-#include "clue.h"
+#include "header/player.h"
+#include "header/vote.h"
+#include "header/clue.h"
 
 void tampilkanMenuUtama();
 void tampilkanPetunjuk();
 void tampilkanLeaderboard();
 void tampilkanPengaturan();
-void jalankanPermainan();
+void jalankanPermainan(PlayerList* playerList);
 
 int main() {
     int pilihan;
+    PlayerList playerList;
+    InitPlayerList(&playerList);
+
+    char pemain[30];
+    int lanjut;
     do {
         tampilkanMenuUtama();
         printf("\nPilih menu (1-5): ");
@@ -21,7 +26,7 @@ int main() {
 
         switch (pilihan) {
             case 1:
-                jalankanPermainan();
+                jalankanPermainan(&playerList);
                 break;
             case 2:
                 tampilkanPetunjuk();
@@ -73,18 +78,18 @@ void tampilkanPengaturan() {
     printf("(fitur akan diimplementasikan)\n");
 }
 
-void jalankanPermainan() {
-    List pemain = InisialisasiPemain();
-    char lanjut[10];
+void jalankanPermainan(PlayerList* playerList) {
+    char pemain[30];
+    char lanjut[10]; // string, bukan int
+
+    fasePemain(playerList, pemain, lanjut);
 
     do {
-        fasePemain(PlayerList* list, int* jumlahPemain)
-
         printf("\n🎙 FASE CLUE DIMULAI\n");
-        faseClue(pemain);
+        faseClue(playerList);
 
         printf("\n🗳 FASE VOTING DIMULAI\n");
-        faseVoting(pemain);
+        faseVoting(playerList); // karena menerima List
 
         printf("\nIngin lanjut ke ronde berikutnya? (ya/tidak): ");
         scanf("%s", lanjut);
@@ -93,7 +98,7 @@ void jalankanPermainan() {
     } while (strcmp(lanjut, "ya") == 0);
 
     // DEALOKASI LIST
-    address p = First(pemain);
+    address p = First(*playerList);
     while (p != NULL) {
         address temp = p;
         p = Next(p);

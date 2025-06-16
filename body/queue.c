@@ -1,7 +1,7 @@
 // queue.c
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
+#include "header/queue.h"
 
 /**** Konstruktor/Kreator ****/
 void CreateQueue(Queue *Q) {

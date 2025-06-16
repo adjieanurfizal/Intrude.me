@@ -5,8 +5,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "link.h"
-#include "boolean.h"
+#include "linkedlist.h"
+#include "BOOLEAN.H"
 
 /* Definisi Queue sebagai Linked List dengan Head dan Tail */
 typedef struct {

@@ -1,43 +1,50 @@
-// vote.h
-// Header untuk modul voting & skip voting
-
 #ifndef VOTE_H
 #define VOTE_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
 #include <stdbool.h>
-
-#include "../BOOLEAN.H"
 #include "linkedlist.h"
-#include "stack.h"
 
-// Struktur vote
+// --- Struktur Vote ---
 typedef struct {
     char voter[50];
     char target[50];
 } Vote;
 
-// Stack global
-extern Stack stackVoting;
-extern Stack stackReClue;
+// --- Stack khusus Vote ---
+typedef struct tElmtVoteStack *addressVote;
+typedef struct tElmtVoteStack {
+    Vote info;
+    addressVote next;
+} ElmtVoteStack;
 
-// Voting Stack
-void CreateVoteStack(Stack *S);
-void PushVote(Stack *S, Vote v);
-void PopVote(Stack *S, Vote *v);
+typedef addressVote StackVote;
 
-// Skip Voting Stack
-void CreateSkipStack(Stack *S);
-void PushSkip(Stack *S, Vote namaPemain);
-void PopSkip(Stack *S, Vote *namaKeluar);
+// --- Stack khusus nama string (skip voting) ---
+typedef struct tElmtStrStack *addressStr;
+typedef struct tElmtStrStack {
+    char info[50];
+    addressStr next;
+} ElmtStrStack;
 
-// Proses voting eliminasi
-void ProsesEliminasi(Stack S, List L);
+typedef addressStr StackString;
 
-// Prosedur fase voting
-void faseVoting(List L);
+// --- Stack global (untuk permainan) ---
+extern StackVote stackVoting;
+extern StackString stackReClue;
+
+// --- Prototipe fungsi voting ---
+void CreateVoteStack(StackVote *S);
+bool IsVoteStackEmpty(StackVote S);
+void PushVote(StackVote *S, Vote v);
+void PopVote(StackVote *S, Vote *v);
+
+// --- Prototipe fungsi skip voting ---
+void CreateSkipStack(StackString *S);
+void PushSkip(StackString *S, char nama[]);
+void PopSkip(StackString *S, char nama[]);
+
+// --- Proses voting & eliminasi ---
+void ProsesEliminasi(StackVote S, List L);
+void faseVoting(PlayerList* L);
 
 #endif

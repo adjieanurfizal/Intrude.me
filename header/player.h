@@ -3,6 +3,7 @@
 #define PLAYER_H
 
 #include <stdbool.h>
+#include "queue.h"
 
 #define MAX_NAME 30
 #define MAX_WORD 30
@@ -37,9 +38,9 @@ void PrintPlayers(const PlayerList* list);
 void DistributeWords(PlayerList* list, const char* developerWord, const char* malwareWord);
 
 // Integrasi dengan Queue (jika infotype diubah jadi pointer)
-void AddPlayersToQueue(PlayerList* list, struct Queue* q);
+void AddPlayersToQueue(PlayerList* list, Queue* q);
 
 void assignRole(PlayerList* list);
-void fasePemain(PlayerList* list, int* jumlahPemain);
+void fasePemain(PlayerList* list, char pemain[], char lanjut[]);
 
 #endif

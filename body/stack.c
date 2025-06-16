@@ -18,7 +18,7 @@ void CreateEmpty (Stack *S){
 }
 
 /* Predikat untuk test keadaan KOLEKSI */
-bool IsEmpty (Stack S){
+bool IsStackEmpty (Stack S){
 	return (isEmpty(S));
 }
 
