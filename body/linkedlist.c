@@ -1,8 +1,3 @@
-/* File        : linkedlist.c                                                                               */
-/* Deskripsi   : Body prototype ADT Non Restricted Single Linked/Linear list yang hanya dikenali First(L)   */
-/* Dibuat oleh : Ade Chandra Nugraha                                                                        */
-/* Tanggal     : 24-10-2001                                                                                 */
-
 #include <limits.h>
 #include <malloc.h>
 #include "../header/linkedlist.h"

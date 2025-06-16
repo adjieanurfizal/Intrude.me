@@ -1,7 +1,3 @@
-/* File        : queue.h */
-/* Deskripsi   : Deklarasi Queue menggunakan ADT Linked List */
-/* Dibuat oleh : Ade Chandra Nugraha */
-
 #ifndef QUEUE_H
 #define QUEUE_H
 

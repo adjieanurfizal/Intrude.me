@@ -1,10 +1,3 @@
-/* File        : linkedlist.h                                       */
-/* Deskripsi   : ADT list berkait dengan representasi fisik pointer */
-/*		         Representasi address dengan pointer                */
-/*		         InfoType adalah integer                            */
-/* Dibuat oleh : Ade Chandra Nugraha                                */
-/* Tanggal     : 24-10-2001                                         */
-
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 #include "BOOLEAN.H"

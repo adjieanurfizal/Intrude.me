@@ -1,7 +1,3 @@
-/* File        : stack.c                                                */
-/* Deskripsi   : Body ADT stack yang diimplementasikan dgn linked list  */
-/* Dibuat oleh : Ade Chandra Nugraha                                    */
-
 #include "../header/stack.h"
 
 /**** Perubahan nilai komponen struktur ****/

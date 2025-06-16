@@ -1,8 +1,3 @@
-/* File        : stack.h                                                        */
-/* Deskripsi   : Deklarasi stack yang diimplementasikan dgn using ADT linked    */
-/*		 	     Top adalah alamat elemen puncak                                */
-/* Dibuat oleh : Ade Chandra Nugraha                                            */
-
 #ifndef STACK_H
 #define STACK_H
 
