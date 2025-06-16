@@ -1,51 +1,57 @@
+// queue.c
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include "queue.h"
+#include "header/queue.h"
 
-void initQueue(Queue* q) {
-    q->front = q->rear = NULL;
+/**** Konstruktor/Kreator ****/
+void CreateQueue(Queue *Q) {
+    Q->Head = NULL;
+    Q->Tail = NULL;
 }
 
-int isEmpty(Queue* q) {
-    return q->front == NULL;
+/**** Predikat untuk test keadaan Queue ****/
+boolean IsEmpty(Queue Q) {
+    return (Q.Head == NULL);
 }
 
-void enqueue(Queue* q, const char* name) {
-    Player* newPlayer = (Player*)malloc(sizeof(Player));
-    strcpy(newPlayer->name, name);
-    newPlayer->next = NULL;
+/**** Menambahkan elemen ke Queue (Enqueue) ****/
+void Enqueue(Queue *Q, infotype X) {
+    address P = Alokasi(X);
+    if (P != NULL) {
+        if (IsEmpty(*Q)) {
+            Q->Head = P;
+            Q->Tail = P;
+        } else {
+            Next(Q->Tail) = P;
+            Q->Tail = P;
+        }
+    }
+}
 
-    if (q->rear == NULL) {
-        q->front = q->rear = newPlayer;
+/**** Menghapus elemen dari Queue (Dequeue) ****/
+void Dequeue(Queue *Q, infotype *X) {
+    if (!IsEmpty(*Q)) {
+        address P = Q->Head;
+        *X = Info(P);
+        Q->Head = Next(P);
+        if (Q->Head == NULL) {
+            Q->Tail = NULL;
+        }
+        DeAlokasi(P);
+    }
+}
+
+/**** Mencetak elemen dalam Queue ****/
+void PrintQueue(Queue Q) {
+    address P = Q.Head;
+    printf("Isi Queue: ");
+    if (IsEmpty(Q)) {
+        printf("Kosong\n");
     } else {
-        q->rear->next = newPlayer;
-        q->rear = newPlayer;
+        while (P != NULL) {
+            printf("%d ", Info(P));
+            P = Next(P);
+        }
+        printf("\n");
     }
-}
-
-char* dequeue(Queue* q) {
-    if (isEmpty(q)) {
-        return NULL;
-    }
-
-    Player* temp = q->front;
-    char* name = strdup(temp->name); // return salinan nama
-
-    q->front = q->front->next;
-    if (q->front == NULL) {
-        q->rear = NULL;
-    }
-
-    free(temp);
-    return name;
-}
-
-void printQueue(Queue* q) {
-    Player* current = q->front;
-    while (current != NULL) {
-        printf("%s -> ", current->name);
-        current = current->next;
-    }
-    printf("NULL\n");
 }
