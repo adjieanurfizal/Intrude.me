@@ -10,7 +10,7 @@
 #include <time.h>
 #include <stdbool.h>
 
-#include "../BOOLEAN.H"
+#include "BOOLEAN.H"
 #include "linkedlist.h"
 #include "stack.h"
 #include "log.h"

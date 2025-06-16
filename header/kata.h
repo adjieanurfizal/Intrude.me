@@ -1,4 +1,3 @@
-// kata.h
 #ifndef KATA_H
 #define KATA_H
 

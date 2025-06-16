@@ -5,7 +5,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "link.h"
+#include "linkedlist.h"
 #include "boolean.h"
 
 /* Definisi Queue sebagai Linked List dengan Head dan Tail */

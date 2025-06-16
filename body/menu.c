@@ -93,4 +93,6 @@ void menuUtama() {
     jumlahVote = 0;
 
     printf("\n👋 Terima kasih telah bermain!\n");
+    getchar();
+
 }
