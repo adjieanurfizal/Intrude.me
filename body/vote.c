@@ -1,49 +1,21 @@
-// vote.c
-// Sistem Voting & Skip Voting untuk INTRUDE.ME dengan integrasi ke Stack
-
 #include "../header/vote.h"
-#include "../header/stack.h"
-#include "../header/linkedlist.h"
 
-// Stack voting & skip
-Stack stackVoting;
-Stack stackReClue;
-
-// Inisialisasi stack kosong untuk skip voting
-void CreateSkipStack(Stack *S) {
-    CreateEmpty(S);
-}
-
-// Tambahkan pemain ke stack skip voting
-void PushSkip(Stack *S, infotype namaPemain) {
-    Push(S, namaPemain);
-}
-
-// Ambil pemain terakhir yang skip voting
-void PopSkip(Stack *S, infotype *namaKeluar) {
-    Pop(S, namaKeluar);
-}
-
-// Inisialisasi stack voting
-void CreateVoteStack(Stack *S) {
-    CreateEmpty(S);
-}
-
-// Tambahkan voting ke stack
-void PushVote(Stack *S, Vote v) {
-    Push(S, v);
-}
-
-// Ambil voting terakhir dari stack
-void PopVote(Stack *S, Vote *v) {
-    Pop(S, v);
-}
-
-// Proses eliminasi berdasarkan voting yang tidak skip
-void ProsesEliminasi(Stack S, List L) {
-    if (IsEmpty(S)) {
-        return;
+Vote* CreateVote(const char* voter, const char* target) {
+    Vote* v = (Vote*)malloc(sizeof(Vote));
+    if (v) {
+        strncpy(v->voter, voter, 50);
+        strncpy(v->target, target, 50);
     }
+    return v;
+}
+
+void PrintVote(infotype data) {
+    Vote* v = (Vote*)data;
+    printf("Voter: %s -> Target: %s\n", v->voter, v->target);
+}
+
+void ProsesEliminasi(Stack S, List L) {
+    if (IsStackEmpty(S)) return;
 
     typedef struct {
         char target[50];
@@ -53,22 +25,27 @@ void ProsesEliminasi(Stack S, List L) {
     VoteCount hasil[50];
     int nHasil = 0;
 
-    while (!IsEmpty(S)) {
-        Vote v;
-        Pop(&S, &v);
+    while (!IsStackEmpty(S)) {
+        infotype temp;
+        Pop(&S, &temp);
+        Vote* v = (Vote*)temp;
+
         int found = 0;
         for (int i = 0; i < nHasil; i++) {
-            if (strcmp(hasil[i].target, v.target) == 0) {
+            if (strcmp(hasil[i].target, v->target) == 0) {
                 hasil[i].count++;
                 found = 1;
                 break;
             }
         }
+
         if (!found) {
-            strcpy(hasil[nHasil].target, v.target);
+            strcpy(hasil[nHasil].target, v->target);
             hasil[nHasil].count = 1;
             nHasil++;
         }
+
+        free(v);
     }
 
     int max = -1, idxMax = -1;
@@ -82,8 +59,10 @@ void ProsesEliminasi(Stack S, List L) {
     if (idxMax != -1) {
         address p = First(L);
         while (p != NULL) {
-            if (strcmp(Info(p).nama, hasil[idxMax].target) == 0) {
-                Info(p).aktif = 0;
+            Player* pl = (Player*)Info(p);
+            if (strcmp(pl->name, hasil[idxMax].target) == 0) {
+                pl->eliminated = true;
+                printf("\u274C %s telah dieliminasi!\n", pl->name);
                 break;
             }
             p = Next(p);
@@ -91,38 +70,40 @@ void ProsesEliminasi(Stack S, List L) {
     }
 }
 
-// Prosedur utama fase voting
-void faseVoting(List L) {
-    CreateVoteStack(&stackVoting);
-    CreateSkipStack(&stackReClue);
+void faseVoting(List L, int ronde) {
+    printf("\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n");
+    printf("\U0001F5F3  FASE VOTING DIMULAI\n");
+    printf("\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n");
+
+    CreateStack(&stackVoting);
+    CreateStack(&stackReClue);
 
     address p = First(L);
     while (p != NULL) {
-        if (Info(p).aktif == 1) {
+        Player* pl = (Player*)Info(p);
+        if (!pl->eliminated) {
             char pilihan[10];
-            printf("\n🗳️  %s, ingin vote atau skip? (vote/skip): ", Info(p).nama);
+            printf("\n\U0001F5F3  %s, ingin vote atau skip? (vote/skip): ", pl->name);
             scanf("%s", pilihan);
             getchar();
 
             if (strcmp(pilihan, "skip") == 0) {
-                PushSkip(&stackReClue, Info(p).nama);
-                printf("🔕 %s skip voting dan akan memberikan clue ulang.\n", Info(p).nama);
+                Push(&stackReClue, pl);
+                printf("\U0001F515 %s skip voting dan akan memberikan clue ulang.\n", pl->name);
             } else {
-                Vote v;
-                strcpy(v.voter, Info(p).nama);
-
                 char target[50];
-                printf("👁️  %s memilih siapa? Masukkan nama target: ", Info(p).nama);
+                printf("\U0001F441  %s memilih siapa? Masukkan nama target: ", pl->name);
                 fgets(target, 50, stdin);
                 target[strcspn(target, "\n")] = 0;
-                strcpy(v.target, target);
 
-                PushVote(&stackVoting, v);
+                Vote* v = CreateVote(pl->name, target);
+                Push(&stackVoting, v);
+                catatVote(v->voter, v->target, ronde);
             }
         }
         p = Next(p);
     }
 
-    printf("\n⏳ Proses eliminasi dimulai...\n");
+    printf("\n\u23F3 Proses eliminasi dimulai...\n");
     ProsesEliminasi(stackVoting, L);
-} 
+}

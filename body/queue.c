@@ -1,38 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "../header/queue.h"
 
 void CreateQueue(Queue *Q) {
-    Q->Front = NULL;
-    Q->Rear = NULL;
+    Q->Head = NULL;
+    Q->Tail = NULL;
 }
 
-boolean is_Empty(Queue Q) {
-    return (Q.Front == NULL);
+boolean IsEmpty(Queue Q) {
+    return (Q.Head == NULL);
 }
 
-boolean is_Full(Queue Q) {
-    return false; // Karena menggunakan linked list, queue tidak bisa penuh
-}
-
-void EnQueue(Queue *Q, infotype X) {
+void Enqueue(Queue *Q, infotype X) {
     address P = Alokasi(X);
     if (P != NULL) {
-        if (is_Empty(*Q)) {
-            Q->Front = Q->Rear = P;
+        if (IsEmpty(*Q)) {
+            Q->Head = P;
+            Q->Tail = P;
         } else {
-            Q->Rear->next = P;
-            Q->Rear = P;
+            Next(Q->Tail) = P;
+            Q->Tail = P;
         }
     }
 }
 
-void deQueue(Queue *Q, infotype *X) {
-    if (!is_Empty(*Q)) {
-        address P = Q->Front;
-        *X = P->info;
-        Q->Front = Q->Front->next;
-        if (Q->Front == NULL) {
-            Q->Rear = NULL;
+void Dequeue(Queue *Q, infotype *X) {
+    if (!IsEmpty(*Q)) {
+        address P = Q->Head;
+        *X = Info(P);
+        Q->Head = Next(P);
+        if (Q->Head == NULL) {
+            Q->Tail = NULL;
         }
-        Dealokasi(P);
+        DeAlokasi(P);
+    }
+}
+
+void PrintQueue(Queue Q, void (*printFunc)(infotype)) {
+    address P = Q.Head;
+    while (P != NULL) {
+        printFunc(Info(P));
+        P = Next(P);
     }
 }
