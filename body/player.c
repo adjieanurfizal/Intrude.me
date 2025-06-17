@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "player.h"
-#include "queue.h"
+#include "../header/player.h"
+#include "../header/queue.h"
 
 Player* CreatePlayer(const char* name, Role role) {
     Player* newP = (Player*)malloc(sizeof(Player));

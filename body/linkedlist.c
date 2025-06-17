@@ -1,6 +1,6 @@
 #include <limits.h>
 #include <malloc.h>
-#include "header/linkedlist.h"
+#include "../header/linkedlist.h"
 
 /**** Predikat untuk test keadaan LIST  ****/
 boolean ListEmpty (List L){

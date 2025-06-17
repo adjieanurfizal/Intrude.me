@@ -1,4 +1,4 @@
-#include "header/clue.h"
+#include "../header/clue.h"
 
 void faseClue(List L) {
     printf("\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n");

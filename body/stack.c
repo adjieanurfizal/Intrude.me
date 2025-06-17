@@ -2,7 +2,7 @@
 /* Deskripsi   : Body ADT stack yang diimplementasikan dgn linked list  */
 /* Dibuat oleh : Ade Chandra Nugraha                                    */
 
-#include "header/stack.h"
+#include "../header/stack.h"
 
 /**** Perubahan nilai komponen struktur ****/
 void SetTop (Stack *S, Stack NewTop ){

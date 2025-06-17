@@ -1,4 +1,5 @@
-#include "header/vote.h"
+#include "../header/vote.h"
+#include "../header/stack.h"
 
 Stack stackVoting;
 Stack stackReClue;

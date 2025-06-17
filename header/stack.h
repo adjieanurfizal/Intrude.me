@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "vote.h"
+#include "linkedlist.h"
 
 typedef address Stack;
 
