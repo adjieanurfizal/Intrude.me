@@ -75,6 +75,10 @@ void ProsesEliminasi(Stack S, List L) {
 }
 
 void faseVoting(List L) {
+    printf("\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+    printf("🗳️  FASE VOTING DIMULAI     \n");
+    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
     CreateStack(&stackVoting);
     CreateStack(&stackReClue);
 
@@ -96,8 +100,11 @@ void faseVoting(List L) {
                 fgets(target, 50, stdin);
                 target[strcspn(target, "\n")] = 0;
 
+               
+                
                 Vote* v = CreateVote(pl->name, target);
                 Push(&stackVoting, v);
+                catatVote(v.voter, v.target, ronde);
             }
         }
         p = Next(p);

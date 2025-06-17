@@ -10,8 +10,9 @@
 #include "queue.h"
 #include "linkedlist.h"
 
-
 Queue queueClue;
+extern Stack stackReClue; // Dari skip voting
+extern Stack stackVoting; // Dari vote aktif
 
 void faseClue(List L);  // jika pakai pointer
 

@@ -36,8 +36,8 @@ void faseClue(List L) {
         fgets(clue, 100, stdin);
         clue[strcspn(clue, "\n")] = 0;
 
-        tampilkanClue(&L, nama, clue);
-        free(nama);  // karena kita pakai strdup
+        catatClue(nama, clue, ronde);
+        tampilkanClue(nama, clue);
     }
 }
 
