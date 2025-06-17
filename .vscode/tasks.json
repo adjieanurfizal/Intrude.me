@@ -8,9 +8,9 @@
       "args": [
   "-fdiagnostics-color=always",
   "-g",
-  "D:\\Intrude.me\\body\\tes_raylib.c",
+  "D:\\Intrude.me\\body\\ui.c",
   "-o",
-  "D:\\Intrude.me\\body\\tes_raylib.exe",
+  "D:\\Intrude.me\\body\\IntrudeMe.exe",
   "-I", "C:/Users/hp/Downloads/raylib-5.0_win64_mingw-w64/include",
   "-L", "C:/Users/hp/Downloads/raylib-5.0_win64_mingw-w64/lib",
   "-lraylib",
