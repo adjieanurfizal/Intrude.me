@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "linkedlist.h"
 #include "tree.h"
 #include "player.h"
 #include "queue.h"
@@ -15,8 +16,8 @@
 
 typedef struct {
     char kategori[MAX_KATA];
-    char kata1[MAX_KATA]; // untuk Developer
-    char kata2[MAX_KATA]; // untuk Malware
+    char kata1[MAX_KATA];
+    char kata2[MAX_KATA];
 } PairKata;
 
 extern PairKata daftarPasangan[];
@@ -29,7 +30,7 @@ void tambahPairKata(const char* kategori, const char* kata1, const char* kata2);
 Address buildTreeKataRahasia();
 void addCustomCategory(Address root, char* categoryName);
 void addCustomWordPair(Address root, char* categoryName, char* kata1, char* kata2);
-void assignKataRahasia(PlayerList* list, const char* kategori);
+void assignKataRahasia(List* list, const char* kategori);
 void printKataRahasiaTerpilih();
 
 #endif

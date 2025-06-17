@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "header/ui.h"
-
-#include "header/linkedlist.h"
-#include "header/player.h"
-#include "header/kata.h"
-#include "header/log.h"
-#include "header/vote.h"
-#include "header/clue.h"
+#include "../header/ui.h"
+#include "../header/linkedlist.h"
+#include "../header/player.h"
+#include "../header/kata.h"
+#include "../header/queue.h"
+#include "../header/vote.h"
+#include "../header/clue.h"
+#include "../header/log.h"
 
 void menuUtama() {
     imporLogDariFile();
@@ -26,7 +26,7 @@ void menuUtama() {
         getchar();
 
         if (pilihan == 1) {
-            PlayerList pemain;
+            List pemain;
             InitPlayerList(&pemain);
             int jumlah;
             printf("\nMasukkan jumlah pemain: ");
@@ -38,7 +38,7 @@ void menuUtama() {
                 printf("Masukkan nama pemain %d: ", i + 1);
                 fgets(nama, 50, stdin);
                 nama[strcspn(nama, "\n")] = 0;
-                Role r = (i == 0) ? DEVELOPER : (i == 1) ? MALWARE : CIVILIAN;
+                Role r = (i == 0) ? DEVELOPER : (i == 1) ? MALWARE : BOT;
                 AddPlayer(&pemain, CreatePlayer(nama, r));
             }
 
@@ -54,8 +54,8 @@ void menuUtama() {
             int ronde = 1;
             int lanjut = 1;
             while (lanjut) {
-                faseClueRonde(pemain, ronde);
-                faseVotingRonde(pemain, ronde);
+                faseClue(pemain, ronde);
+                faseVoting(pemain, ronde);
 
                 printf("\nLanjut ke ronde berikutnya? (1 = ya, 0 = tidak): ");
                 scanf("%d", &lanjut);
@@ -63,13 +63,14 @@ void menuUtama() {
                 ronde++;
             }
 
-            Player* p = pemain.head;
+            address p = pemain.head;
             while (p != NULL) {
-                tambahSkor(p->name, !p->eliminated, p->eliminated);
-                p = p->next;
+                Player* pl = (Player*)Info(p);
+                tambahSkor(pl->name, !pl->eliminated, pl->eliminated);
+                p = Next(p);
             }
 
-            Player* temp;
+            address temp;
             while (pemain.head != NULL) {
                 temp = pemain.head;
                 pemain.head = pemain.head->next;
@@ -92,7 +93,6 @@ void menuUtama() {
     jumlahClue = 0;
     jumlahVote = 0;
 
-    printf("\n👋 Terima kasih telah bermain!\n");
+    printf("\n\U0001F44B Terima kasih telah bermain!\n");
     getchar();
-
 }

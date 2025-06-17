@@ -1,6 +1,6 @@
 #include "../header/tree.h"
 
-Address newNode(char* label) {
+Address newNode(const char* label) {
     Address p = (Address)malloc(sizeof(TreeNode));
     if (p != NULL) {
         strncpy(p->label, label, MAX_LABEL);

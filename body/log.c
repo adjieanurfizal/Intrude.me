@@ -1,5 +1,4 @@
-// log.c
-#include "log.h"
+#include "../header/log.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -121,7 +120,7 @@ void imporLogDariFile() {
         fclose(fc);
     }
 
-    if (fv) {
+    if(fv) {
         while (fgets(baris, sizeof(baris), fv)) {
             int ronde;
             char voter[50], target[50];

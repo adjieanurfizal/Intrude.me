@@ -1,11 +1,10 @@
-#include "header/kata.h"
+#include "../header/kata.h"
 
-PairKata currentPair; // global pasangan aktif
+PairKata currentPair;
 
 Address buildTreeKataRahasia() {
     Address root = newNode("KATA RAHASIA");
 
-    // Kategori Umum
     Address makanan = newNode("Makanan");
     insertChild(makanan, newNode("Apel"));
     insertChild(makanan, newNode("Pir"));
@@ -20,7 +19,6 @@ Address buildTreeKataRahasia() {
     insertChild(kota, newNode("Jakarta"));
     insertChild(kota, newNode("Bekasi"));
 
-    // Kategori Informatika
     Address informatika = newNode("Informatika");
     Address struktur = newNode("Struktur Data");
     insertChild(struktur, newNode("Stack"));
@@ -79,22 +77,23 @@ PairKata randomPairByCategory(const char* kategori) {
     }
 }
 
-void assignKataRahasia(PlayerList* list, const char* kategori) {
+void assignKataRahasia(List* list, const char* kategori) {
     srand(time(NULL));
     currentPair = randomPairByCategory(kategori);
 
-    Player* current = list->head;
+    address current = list->head;
     while (current != NULL) {
-        if (current->role == DEVELOPER) {
-            strncpy(current->word, currentPair.kata1, MAX_WORD);
-        } else if (current->role == MALWARE) {
-            strncpy(current->word, currentPair.kata2, MAX_WORD);
+        Player* pl = (Player*) Info(current);
+        if (pl->role == DEVELOPER) {
+            strncpy(pl->word, currentPair.kata1, MAX_WORD);
+        } else if (pl->role == MALWARE) {
+            strncpy(pl->word, currentPair.kata2, MAX_WORD);
         }
-        current = current->next;
+        current = Next(current);
     }
 }
 
 void printKataRahasiaTerpilih() {
-    printf("🔒 Kata Rahasia Developer: %s\n", currentPair.kata1);
-    printf("🛑 Kata Rahasia Malware  : %s\n", currentPair.kata2);
+    printf("\U0001F512 Kata Rahasia Developer: %s\n", currentPair.kata1);
+    printf("\U0001F6D1 Kata Rahasia Malware  : %s\n", currentPair.kata2);
 }

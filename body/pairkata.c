@@ -1,4 +1,4 @@
-#include "header/kata.h"
+#include "../header/kata.h"
 
 PairKata daftarPasangan[MAX_PAIR] = {
     {"Makanan", "Apel", "Pir"},

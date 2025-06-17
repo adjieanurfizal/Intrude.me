@@ -1,7 +1,4 @@
-#include "header/vote.h"
-
-Stack stackVoting;
-Stack stackReClue;
+#include "../header/vote.h"
 
 Vote* CreateVote(const char* voter, const char* target) {
     Vote* v = (Vote*)malloc(sizeof(Vote));
@@ -65,7 +62,7 @@ void ProsesEliminasi(Stack S, List L) {
             Player* pl = (Player*)Info(p);
             if (strcmp(pl->name, hasil[idxMax].target) == 0) {
                 pl->eliminated = true;
-                printf("❌ %s telah dieliminasi!\n", pl->name);
+                printf("\u274C %s telah dieliminasi!\n", pl->name);
                 break;
             }
             p = Next(p);
@@ -73,10 +70,10 @@ void ProsesEliminasi(Stack S, List L) {
     }
 }
 
-void faseVoting(List L) {
-    printf("\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
-    printf("🗳️  FASE VOTING DIMULAI     \n");
-    printf("━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+void faseVoting(List L, int ronde) {
+    printf("\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n");
+    printf("\U0001F5F3  FASE VOTING DIMULAI\n");
+    printf("\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n");
 
     CreateStack(&stackVoting);
     CreateStack(&stackReClue);
@@ -86,29 +83,27 @@ void faseVoting(List L) {
         Player* pl = (Player*)Info(p);
         if (!pl->eliminated) {
             char pilihan[10];
-            printf("\n🗳  %s, ingin vote atau skip? (vote/skip): ", pl->name);
+            printf("\n\U0001F5F3  %s, ingin vote atau skip? (vote/skip): ", pl->name);
             scanf("%s", pilihan);
             getchar();
 
             if (strcmp(pilihan, "skip") == 0) {
                 Push(&stackReClue, pl);
-                printf("🔕 %s skip voting dan akan memberikan clue ulang.\n", pl->name);
+                printf("\U0001F515 %s skip voting dan akan memberikan clue ulang.\n", pl->name);
             } else {
                 char target[50];
-                printf("👁  %s memilih siapa? Masukkan nama target: ", pl->name);
+                printf("\U0001F441  %s memilih siapa? Masukkan nama target: ", pl->name);
                 fgets(target, 50, stdin);
                 target[strcspn(target, "\n")] = 0;
 
-               
-                
                 Vote* v = CreateVote(pl->name, target);
                 Push(&stackVoting, v);
-                catatVote(v.voter, v.target, ronde);
+                catatVote(v->voter, v->target, ronde);
             }
         }
         p = Next(p);
     }
 
-    printf("\n⏳ Proses eliminasi dimulai...\n");
+    printf("\n\u23F3 Proses eliminasi dimulai...\n");
     ProsesEliminasi(stackVoting, L);
 }

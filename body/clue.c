@@ -1,6 +1,6 @@
-#include "header/clue.h"
+#include "../header/clue.h"
 
-void faseClue(List L) {
+void faseClue(List L, int ronde) {
     printf("\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
     printf("🔁  FASE CLUE RONDE DIMULAI\n");
     printf("━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
@@ -37,7 +37,7 @@ void faseClue(List L) {
         clue[strcspn(clue, "\n")] = 0;
 
         catatClue(nama, clue, ronde);
-        tampilkanClue(nama, clue);
+        tampilkanClue(&L, nama, clue);
     }
 }
 

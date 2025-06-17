@@ -1,6 +1,3 @@
-// clue.h
-// Header untuk faseClue dan faseReClue
-
 #ifndef CLUE_H
 #define CLUE_H
 
@@ -9,13 +6,14 @@
 #include "stack.h"
 #include "queue.h"
 #include "linkedlist.h"
+#include "vote.h"
+#include "log.h"
 
-Queue queueClue;
-extern Stack stackReClue; // Dari skip voting
-extern Stack stackVoting; // Dari vote aktif
+extern Stack stackReClue;
+extern Stack stackVoting;
+extern Queue queueClue;
 
-void faseClue(List L);  // jika pakai pointer
-
+void faseClue(List L, int ronde);
 void tampilkanClue(List* list, const char* nama, const char* clue);
 
 #endif

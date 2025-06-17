@@ -1,8 +1,8 @@
-// player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 
 #include <stdbool.h>
+#include "linkedlist.h"
 #include "queue.h"
 
 #define MAX_NAME 30
@@ -15,13 +15,13 @@ typedef enum {
     BOT
 } Role;
 
-// Struktur data pemain (linked list)
+// Struktur data pemain
 typedef struct Player {
-    char name[MAX_NAME];     // Nama pemain
-    Role role;               // Peran
-    char word[MAX_WORD];     // Kata rahasia yang diberikan
+    char name[MAX_NAME];
+    Role role;
+    char word[MAX_WORD];
     char clue[MAX_WORD];
-    bool eliminated;         // Apakah sudah dieliminasi
+    bool eliminated;
 } Player;
 
 // Fungsi-fungsi dasar
@@ -34,5 +34,6 @@ void DistributeWords(List* list, const char* developerWord, const char* malwareW
 void AddPlayersToQueue(List* list, Queue* q);
 void assignRole(List* list);
 void fasePemain(List* list, char pemain[], char lanjut[]);
+void SimpanClue(List* list, const char* nama, const char* clue);
 
 #endif
