@@ -1,7 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../header/player.h"
+#include "../header/ui.h"
+
+int displayIndex = 0;
+static bool seen = false;
 
 Player* CreatePlayer(const char* name, Role role) {
     Player* newP = (Player*) malloc(sizeof(Player));
@@ -13,6 +14,81 @@ Player* CreatePlayer(const char* name, Role role) {
         newP->eliminated = false;
     }
     return newP;
+}
+
+Player* FindPlayerByName(List* list, const char* name) {
+    address p = list->head;
+    while (p != NULL) {
+    Player* pl = (Player*)Info(p);
+    if (strcmp(pl->name, name) == 0) return pl;
+        p = Next(p);
+    }
+    return NULL;
+}
+
+int CountActivePlayers(List* list) {
+    int count = 0;
+    address p = list->head;
+    while (p != NULL) {
+    Player* pl = (Player*)Info(p);
+    if (!pl->eliminated) count++;
+        p = Next(p);
+    }
+    return count;
+}
+
+Player* GetActivePlayerByIndex(List* list, int index) {
+    int i = 0;
+    address p = list->head;
+    while (p != NULL) {
+    Player* pl = (Player*)Info(p);
+    if (!pl->eliminated) {
+        if (i == index) return pl;
+            i++;
+        }
+        p = Next(p);
+    }
+    return NULL;
+}
+
+void InitRoleDisplay() {
+    displayIndex = 0;
+    seen = false;
+}
+
+void RoleDisplay() {
+    if (!seen && IsKeyPressed(KEY_SPACE)) {
+        seen = true;
+    } else if (seen && IsKeyPressed(KEY_ENTER)) {
+        displayIndex++;
+        seen = false;
+        if (displayIndex >= playerCount) {
+            screen = 4; // lanjut ke fase clue
+            for (int i = 0; i < playerCount; i++) {
+                if (!players[i].eliminated) {
+                    Enqueue(&queueClue, &players[i]);
+                }
+            }
+        }
+    }
+}
+
+void DrawRoleDisplay() {
+    ClearBackground(RAYWHITE);
+    if (displayIndex < playerCount) {
+        char title[128];
+        sprintf(title, "Giliran %s melihat peran", players[displayIndex].name);
+        DrawText(title, 50, 40, 20, DARKBLUE);
+            if (!seen) {
+            DrawText("Tekan [SPACE] untuk membuka peran", 50, 100, 20, DARKGRAY);
+        } else {
+            const char* roleText = (players[displayIndex].role == DEVELOPER) ? "DEVELOPER" :
+            (players[displayIndex].role == MALWARE) ? "MALWARE" : "BOT";
+            DrawText(roleText, 50, 100, 30, RED);
+            DrawText(players[displayIndex].word, 50, 150, 30, GREEN);
+            DrawText("Tekan [ENTER] jika sudah dibaca", 50, 200, 20, GRAY);
+        }
+    }
 }
 
 void PrintPlayer(infotype data) {

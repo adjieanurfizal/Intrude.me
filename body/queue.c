@@ -36,6 +36,17 @@ void Dequeue(Queue *Q, infotype *X) {
     }
 }
 
+void FreeQueue(Queue *Q, infotype *X) {
+    if (!IsEmpty(*Q)) {
+        address P = Q->Head;
+        *X = Info(P);
+        Q->Head = Next(P);
+    }
+    if (Q->Head == NULL) {
+    Q->Tail = NULL;
+    }
+} // for static array
+
 void PrintQueue(Queue Q, void (*printFunc)(infotype)) {
     address P = Q.Head;
     while (P != NULL) {

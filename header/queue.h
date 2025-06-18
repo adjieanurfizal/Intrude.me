@@ -13,6 +13,7 @@ void CreateQueue(Queue *Q);
 boolean IsEmpty(Queue Q);
 void Enqueue(Queue *Q, infotype X);
 void Dequeue(Queue *Q, infotype *X);
+void FreeQueue(Queue *Q, infotype *X);
 void PrintQueue(Queue Q, void (*printfunc)(infotype));
 
 #endif

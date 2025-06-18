@@ -2,6 +2,10 @@
 #define PLAYER_H
 
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <raylib.h>
+#include <string.h>
 #include "linkedlist.h"
 #include "queue.h"
 
@@ -24,8 +28,17 @@ typedef struct Player {
     bool eliminated;
 } Player;
 
+extern Queue queueClue;
+extern int displayIndex;
+
 // Fungsi-fungsi dasar
 Player* CreatePlayer(const char* name, Role role);
+Player* FindPlayerByName(List* list, const char* name);
+int CountActivePlayers(List* list);
+Player* GetActivePlayerByIndex(List* list, int index);
+void InitRoleDisplay();
+void RoleDisplay();
+void DrawRoleDisplay();
 void PrintPlayer(infotype data);
 void InitPlayerList(List* list);
 void AddPlayer(List* list, Player* newPlayer);

@@ -15,6 +15,7 @@ void catatClue(const char* nama, const char* clue, int ronde) {
     if (jumlahClue < MAX_LOG) {
         strcpy(logClues[jumlahClue].nama, nama);
         strcpy(logClues[jumlahClue].clue, clue);
+        logClues[jumlahClue].timestamp = time(NULL);
         logClues[jumlahClue].ronde = ronde;
         jumlahClue++;
     }
@@ -24,6 +25,7 @@ void catatVote(const char* voter, const char* target, int ronde) {
     if (jumlahVote < MAX_LOG) {
         strcpy(logVotes[jumlahVote].voter, voter);
         strcpy(logVotes[jumlahVote].target, target);
+        logVotes[jumlahVote].timestamp = time(NULL);
         logVotes[jumlahVote].ronde = ronde;
         jumlahVote++;
     }

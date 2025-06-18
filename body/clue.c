@@ -1,11 +1,12 @@
 #include "../header/clue.h"
 
+Queue queueClue;
+
 void faseClue(List L, int ronde) {
     printf("\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
     printf("🔁  FASE CLUE RONDE DIMULAI\n");
     printf("━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
-    Queue queueClue;
     CreateQueue(&queueClue);
 
     // Ambil dari stackReClue
